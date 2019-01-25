@@ -1,0 +1,14 @@
+[Unit]
+Description=Mqtt Alarm Service
+
+[Service]
+ExecStart=/home/pi/ring-alarm-HA-plugin/ring.sh
+Restart=always
+User=nobody
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/pi/ring-alarm-HA-plugin
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+{
+  "name": "ring-alarm",
+  "version": "0.1.1",
+  "description": "Ring.com Doorbell API (based on doorbot)",
+  "author": {
+    "name": "Marshall Rose",
+    "email": "mrose17@homespun.io"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "jshint package.json *.js"
+  },
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "ring",
+    "alarm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:homespun/ring-alarm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/homespun/ring-alarm/issues"
+  },
+  "homepage": "https://github.com/homespun/ring-alarm",
+  "dependencies": {
+    "debug": "^2.6.8",
+    "socket.io-client": "^2.1.1"
+  }
+}
