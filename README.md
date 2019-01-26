@@ -10,12 +10,16 @@ Installation/Usage
 * Clone this github
 * npm install mqtt async ring-alarm
 * Add your Ring credentials and MQTT broker address to mqttAlarm.sh
+* Set the Discovery flag to true or false in the mqttAlarm.sh script
 ```
 chmod a+x mqttAlarm.sh
 ./mqttAlarm.sh
 ```
 
+
+
 ## Features:
+### With auto-discovery (discovery flag set to true):
 * Works with MQTT discovery in Home Assistant
 * Automagically adds all your contact sensors, motion sensors, and alarm units as sensors in HA
 * Updates contact/motion sensor status in real-time as long as mqttAlarm.js script is running
@@ -23,6 +27,9 @@ chmod a+x mqttAlarm.sh
 * Set alarm mode directly from alarm sensor 
 * Creates a connectivity sensor that monitors connection to Ring API.  Shows unavailable if no connectivity with API in last 15 seconds
 
+### Without auto-discovery (discovery flag set to false):
+* Same features as above except no autodiscovery
+* yamlGenerator.js will produce a yaml configuration file that can be copied directly into your HA configuration.yaml to set up all your Ring Alarm devices
 
 # Recognition
 Many thanks to [davglass](https://github.com/davglass) author of [doorbot](https://github.com/davglass/doorbot).
