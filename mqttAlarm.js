@@ -13,6 +13,7 @@ const mqtt = require('mqtt')
 const client = mqtt.connect(process.env.MQTT);
 var security_panel_zid = ''
 var location_id = ''
+const discovery = process.env.DISCOVERY;
 client.on('connect', function () {
 
 	client.subscribe('homeassistant', function (err) {
@@ -67,44 +68,52 @@ function alarmContact() {
 				console.log('error at getAlarmDevices')
 				return console.log(JSON.stringify(err,null,2));
 			}
-			const configs_topic = 'homeassistant/binary_sensor/alarm/status/config';
-			const messages = { name	: 'Alarm Status'
-					, device_class : 'connectivity'
-					, off_delay: 15
-					};
-			client.publish(configs_topic, JSON.stringify(messages));
+			if (discovery === true){
+				const configs_topic = 'homeassistant/binary_sensor/alarm/status/config';
+				const messages = { name	: 'Alarm Status'
+						, device_class : 'connectivity'
+						, off_delay: 15
+						};
+				client.publish(configs_topic, JSON.stringify(messages));
+			}
 			client.publish('homeassistant/binary_sensor/alarm/status/state','ON');
       message.body.forEach((device) => {
 				var sensor_name = device.general.v2.zid
 				if (device.general.v2.deviceType === 'sensor.motion') {
-					const config_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
-					const message = { name	: device.general.v2.name
-							, device_class : 'motion'
-							};
-					console.log(JSON.stringify(message));
-					client.publish(config_topic, JSON.stringify(message));
+					if (discovery === true){
+						const config_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
+						const message = { name	: device.general.v2.name
+								, device_class : 'motion'
+								};
+						console.log(JSON.stringify(message));
+						client.publish(config_topic, JSON.stringify(message));
+					}
 					const state_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/state';
 					const status = device.device.v1.faulted ? 'ON' : 'OFF';
 					client.publish(state_topic,status);
 				}
 				if (device.general.v2.deviceType === 'sensor.contact') {
-					const topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
-					const message = { name	: device.general.v2.name
-							, device_class : 'door'
-							};
-					console.log(JSON.stringify(message));
-					client.publish(topic, JSON.stringify(message));
+					if (discovery === true){
+						const topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
+						const message = { name	: device.general.v2.name
+								, device_class : 'door'
+								};
+						console.log(JSON.stringify(message));
+						client.publish(topic, JSON.stringify(message));
+					}
 				}
 				if (device.general.v2.deviceType === 'security-panel') {
 					security_panel_zid = sensor_name;
-					const topic = 'homeassistant/alarm_control_panel/alarm/'+sensor_name+'/config';
-					const message = { name  : device.general.v2.name
-							, state_topic : 'home/alarm/state'
-							, command_topic : 'home/alarm/command'
-							};
-					console.log(JSON.stringify(message));
-					client.publish(topic, JSON.stringify(message));
-/*					var state = 'disarmed'
+					if (discovery === true){
+						const topic = 'homeassistant/alarm_control_panel/alarm/'+sensor_name+'/config';
+						const message = { name  : device.general.v2.name
+								, state_topic : 'home/alarm/state'
+								, command_topic : 'home/alarm/command'
+								};
+						console.log(JSON.stringify(message));
+						client.publish(topic, JSON.stringify(message));						
+					}
+					var state = 'disarmed'
 					switch (device.device.v1.mode) {
 						case 'none':
 							break;
@@ -118,8 +127,9 @@ function alarmContact() {
 							state = 'disarmed';
 							break;
 					}
-*/					client.publish('home/alarm/state','disarmed');
+					client.publish('home/alarm/state','disarmed');
 				}
+
   	   });
     });
 
