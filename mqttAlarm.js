@@ -76,7 +76,7 @@ function alarmContact() {
 						};
 				client.publish(configs_topic, JSON.stringify(messages));
 			}
-			client.publish('homeassistant/binary_sensor/alarm/status/state','ON');
+			client.publish('homeassistant/binary_sensor/alarm/status/state','ON',{retain: true});
       message.body.forEach((device) => {
 				var sensor_name = device.general.v2.zid
 				if (device.general.v2.deviceType === 'sensor.motion') {
@@ -90,7 +90,7 @@ function alarmContact() {
 					}
 					const state_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/state';
 					const status = device.device.v1.faulted ? 'ON' : 'OFF';
-					client.publish(state_topic,status);
+					client.publish(state_topic,status,{retain: true});
 				}
 				if (device.general.v2.deviceType === 'sensor.contact') {
 					if (discovery === true){
@@ -111,7 +111,7 @@ function alarmContact() {
 								, command_topic : 'home/alarm/command'
 								};
 						console.log(JSON.stringify(message));
-						client.publish(topic, JSON.stringify(message));						
+						client.publish(topic, JSON.stringify(message));
 					}
 					var state = 'disarmed'
 					switch (device.device.v1.mode) {
@@ -127,7 +127,7 @@ function alarmContact() {
 							state = 'disarmed';
 							break;
 					}
-					client.publish('home/alarm/state','disarmed');
+					client.publish('home/alarm/state',state,{retain: true});
 				}
 
   	   });
@@ -179,23 +179,23 @@ function alarmContact() {
 							break;
 					}
 					console.log(status);
-					return client.publish(topic, status);
+					return client.publish(topic, status,{retain: true});
 				}
 				if (info.deviceType === 'sensor.contact') {
 					update.faulted = context.faulted ? 'ON' : 'OFF';
 					topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/state';
 					status = update.faulted;
-					return client.publish(topic, status);
+					return client.publish(topic, status,{retain: true});
 				};
 				if (info.deviceType === 'sensor.motion') {
 					update.faulted = context.faulted ? 'ON' : 'OFF';
 					topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/state';
 					status = update.faulted;
-					return client.publish(topic, status);
+					return client.publish(topic, status,{retain: true});
 				};
 				if (info.tamperStatus) update.statusTampered = (info.tamperStatus === 'ok') ? 'NOT_TAMPERED' : 'TAMPERED';
 
-				client.publish(topic,status);
+				client.publish(topic,status,{retain: true});
 			});
   });
  });
