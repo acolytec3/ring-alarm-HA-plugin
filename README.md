@@ -8,13 +8,13 @@ Installation/Usage
 ------------
 
 * Clone this github
-* npm install mqtt async ring-alarm
+* npm install mqtt async ring-alarm socket.io-client
 
 If not using autodiscovery, follow the next steps, otherwise skip to next section.
 * npm install js-yaml
 * Configure the Ring credentials and MQTT broker address in the yamlGenerator.sh
 ```
-chmod a+x mqttAlarm.sh
+chmod a+x yamlGenerator.sh
 ./yamlGenerator.sh
 ```
 * Copy the content of the mqtt.yaml file that is generated into your Home Assistant configuration.yamlGenerator
