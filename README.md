@@ -12,12 +12,13 @@ Installation/Usage
 
 If not using autodiscovery, follow the next steps, otherwise skip to next section.
 * npm install js-yaml
-* Configure the Ring credentials and MQTT broker address in the yamlGenerator.sh
+* Configure the Ring credentials in the yamlGenerator.sh
 ```
 chmod a+x yamlGenerator.sh
 ./yamlGenerator.sh
 ```
-* Copy the content of the mqtt.yaml file that is generated into your Home Assistant configuration.yamlGenerator
+* Press Ctrl + C to kill the script once it prints all of the yaml configurations to the console.
+* Copy the content of the mqtt.yaml file that is generated into your Home Assistant configuration.
 
 * Add your Ring credentials and MQTT broker address to mqttAlarm.sh
 * Set the Discovery flag to true or false in the mqttAlarm.sh script depending on your setup
