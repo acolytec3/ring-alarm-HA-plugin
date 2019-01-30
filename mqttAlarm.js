@@ -14,6 +14,7 @@ const client = mqtt.connect(process.env.MQTT);
 var security_panel_zid = ''
 var location_id = ''
 const discovery = process.env.DISCOVERY;
+console.log(discovery)
 client.on('connect', function () {
 
 	client.subscribe('homeassistant', function (err) {
@@ -68,7 +69,8 @@ function alarmContact() {
 				console.log('error at getAlarmDevices')
 				return console.log(JSON.stringify(err,null,2));
 			}
-			if (discovery === true){
+			console.log(discovery);
+			if (discovery == 'true'){
 				const configs_topic = 'homeassistant/binary_sensor/alarm/status/config';
 				const messages = { name	: 'Alarm Status'
 						, device_class : 'connectivity'
@@ -80,7 +82,7 @@ function alarmContact() {
       message.body.forEach((device) => {
 				var sensor_name = device.general.v2.zid
 				if (device.general.v2.deviceType === 'sensor.motion') {
-					if (discovery === true){
+					if (discovery == 'true'){
 						const config_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
 						const message = { name	: device.general.v2.name
 								, device_class : 'motion'
@@ -93,7 +95,7 @@ function alarmContact() {
 					client.publish(state_topic,status,{retain: true});
 				}
 				if (device.general.v2.deviceType === 'sensor.contact') {
-					if (discovery === true){
+					if (discovery == 'true'){
 						const topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
 						const message = { name	: device.general.v2.name
 								, device_class : 'door'
@@ -104,7 +106,7 @@ function alarmContact() {
 				}
 				if (device.general.v2.deviceType === 'security-panel') {
 					security_panel_zid = sensor_name;
-					if (discovery === true){
+					if (discovery == 'true'){
 						const topic = 'homeassistant/alarm_control_panel/alarm/'+sensor_name+'/config';
 						const message = { name  : device.general.v2.name
 								, state_topic : 'home/alarm/state'
