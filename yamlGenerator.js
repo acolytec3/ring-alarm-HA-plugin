@@ -11,7 +11,7 @@
 const RingAPI = require('.');
 const yaml = require('js-yaml')
 const fs = require('fs')
-fs.writeFile('mqtt.yaml','')
+fs.writeFile('mqtt.yaml','',function(err){});
 var security_panel_zid = ''
 var location_id = ''
 
@@ -47,7 +47,7 @@ function alarmContact() {
 					  device_class : messages.device_class,
 					  off_delay: messages.off_delay }};
       console.log(yaml.dump(sensor));
-      fs.appendFile('mqtt.yaml',yaml.dump(sensor));
+      fs.appendFile('mqtt.yaml',yaml.dump(sensor),function(err){});
       message.body.forEach((device) => {
 				var sensor_name = device.general.v2.zid
 				if (device.general.v2.deviceType === 'sensor.motion') {
@@ -60,7 +60,7 @@ function alarmContact() {
 					const status = device.device.v1.faulted ? 'ON' : 'OFF';
           const sensor = {['binary_sensor '+message.name]: {platform: 'mqtt', name: message.name, device_class : message.device_class, state_topic: state_topic}}
 					console.log(yaml.dump(sensor))
-					fs.appendFile('mqtt.yaml',yaml.dump(sensor))
+					fs.appendFile('mqtt.yaml',yaml.dump(sensor),function(err){})
 				}
 				if (device.general.v2.deviceType === 'sensor.contact') {
 					const topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/config';
@@ -71,7 +71,7 @@ function alarmContact() {
 					const state_topic = 'homeassistant/binary_sensor/alarm/'+sensor_name+'/state';
 					const sensor = {['binary_sensor '+message.name] : {platform: 'mqtt', name: message.name, device_class : message.device_class, state_topic: state_topic}}
 					console.log(yaml.dump(sensor))
-					fs.appendFile('mqtt.yaml',yaml.dump(sensor))
+					fs.appendFile('mqtt.yaml',yaml.dump(sensor),function(err){})
 				}
 				if (device.general.v2.deviceType === 'security-panel') {
 					security_panel_zid = sensor_name;
@@ -102,7 +102,7 @@ function alarmContact() {
 					  }
 				  }
           console.log(yaml.dump(sensor));
-          fs.appendFile('mqtt.yaml',yaml.dump(sensor));
+          fs.appendFile('mqtt.yaml',yaml.dump(sensor),function(err){});
 				}
 
   	   });
