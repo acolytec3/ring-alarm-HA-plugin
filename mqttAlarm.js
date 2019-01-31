@@ -14,7 +14,7 @@ const client = mqtt.connect(process.env.MQTT);
 var security_panel_zid = ''
 var location_id = ''
 const discovery = process.env.DISCOVERY;
-console.log(discovery)
+
 client.on('connect', function () {
 
 	client.subscribe('homeassistant', function (err) {
@@ -47,6 +47,9 @@ client.on('message', function(topic, message) {
 			ring.setAlarmMode(station[0],security_panel_zid,alarm_mode,[],(oops) => {});
 		})
 	}
+	if (topic === 'home/alarm/check') {
+		alarmContact();
+	}
 })
 
 var ring = RingAPI({
@@ -69,7 +72,7 @@ function alarmContact() {
 				console.log('error at getAlarmDevices')
 				return console.log(JSON.stringify(err,null,2));
 			}
-			console.log(discovery);
+
 			if (discovery == 'true'){
 				const configs_topic = 'homeassistant/binary_sensor/alarm/status/config';
 				const messages = { name	: 'Alarm Status'
