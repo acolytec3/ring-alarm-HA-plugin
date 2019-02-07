@@ -37,6 +37,7 @@ chmod a+x mqttAlarm.sh
 * Alarm panel reflects current alarm mode (based on updates received from Ring API)
 * Set alarm mode directly from alarm sensor
 * Creates a connectivity sensor that monitors connection to Ring API.  Shows unavailable if no connectivity with API in last 15 seconds
+* Listens for an MQTT topic "home/alarm/check" which will resync all of the alarm device statuses
 
 ### Without auto-discovery (discovery flag set to false):
 * Same features as above except no autodiscovery
@@ -45,6 +46,6 @@ chmod a+x mqttAlarm.sh
 # Recognition
 Many thanks to [davglass](https://github.com/davglass) author of [doorbot](https://github.com/davglass/doorbot).
 
-Many thanks (also) to [joeyberkovitz ](https://github.com/joeyberkovitz) who did most of the legwork on getting the Ring Alarm API connectivity to work.
+Many thanks (also) to [joeyberkovitz](https://github.com/joeyberkovitz) who did most of the legwork on getting the Ring Alarm API connectivity to work.
 
 Thanks also to [homespun](https://github.com/homespun) for updating doorbot with a basic, functional feature set for the Alarm API.

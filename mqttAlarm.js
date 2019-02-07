@@ -10,7 +10,9 @@
 
 const RingAPI = require('.');
 const mqtt = require('mqtt')
-const client = mqtt.connect(process.env.MQTT);
+const mqtt_username = process.env.MQTT_USER || '';
+const mqtt_password = process.env.MQTT_PW || '';
+const client = mqtt.connect(process.env.MQTT,{username: mqtt_username, password: mqtt_password});
 var security_panel_zid = ''
 var location_id = ''
 const discovery = process.env.DISCOVERY;
