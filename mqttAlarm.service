@@ -2,7 +2,7 @@
 Description=Mqtt Alarm Service
 
 [Service]
-ExecStart=/home/pi/ring-alarm-HA-plugin/ring.sh
+ExecStart=/home/pi/ring-alarm-HA-plugin/mqttAlarm.sh
 Restart=always
 User=nobody
 Group=nogroup
