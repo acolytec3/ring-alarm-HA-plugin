@@ -1,3 +1,5 @@
+# This repository is deprecated and no longer maintained.  Please look [here](https://github.com/tsightler/ring-alarm-mqtt) for an equivalent, even better implementation.
+
 Ring Alarm MQTT Alarm Panel Home Assistant Integration
 =====================
 This package is based on Dav Glass' [doorbot](https://github.com/davglass/doorbot) package, Homespun's ring-alarm fork (https://github.com/homespun/ring-alarm), various PRs from Joey Berkovitz (https://github.com/joeyberkovitz) and adapted to work with Home Assistant
